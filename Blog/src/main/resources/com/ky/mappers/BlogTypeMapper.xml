@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ky.mapper.BlogTypeMapper">
+	<resultMap type="BlogType" id="BlogTypeResult">
+		<result property="id" column="id"/>
+		<result property="typeName" column="typeName"/>
+		<result property="orderNo" column="orderNo"/>
+	</resultMap>
+	
+	<select id="countList"  resultMap="BlogTypeResult">
+		select t2.id,t2.typeName,count(t1.id) as blogCount from blog t1 right join blogtype t2  on t2.id=t1.typeId group by t2.typeName order by t2.orderNo;
+	</select>
+	
+	<select id="findById" parameterType="Integer" resultMap="BlogTypeResult">
+		select * from blogtype where id=#{id}
+	</select>
+	
+</mapper>

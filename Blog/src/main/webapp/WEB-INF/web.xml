@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance http://www.springmodules.org/schema/cache/springmodules-cache.xsd 
+http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd "
+xmlns="http://java.sun.com/xml/ns/javaee" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" 
+version="2.5">
+  <display-name>aa</display-name>
+  
+  <welcome-file-list><!-- 访问项目时到 -->
+    <welcome-file>a.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- shiro过滤器定义 -->
+	<filter>  
+	    <filter-name>shiroFilter</filter-name>  
+	    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  
+    <init-param>  
+    <!-- 该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理 -->  
+    <param-name>targetFilterLifecycle</param-name>  
+    <param-value>true</param-value>  
+    </init-param>  
+	</filter>  
+	<filter-mapping>  
+	        <filter-name>shiroFilter</filter-name>  
+	        <url-pattern>/*</url-pattern>  
+	</filter-mapping>
+	
+	
+    <!-- Spring配置文件 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<!-- 编码过滤器 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<async-supported>true</async-supported> 
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- Spring监听器 -->
+	
+		<listener>
+			<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		</listener>
+		<!-- 配置   为了一开服务就加载  博主信息 -->
+		
+		<listener>
+			<listener-class>com.ky.biz.impl.InitComponent4</listener-class>
+		</listener>
+		
+	<!-- 添加对springmvc的支持 -->
+	<servlet>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+		<!--读取spring-Mvc  -->
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring-mvc.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported> 
+		<!--async = True 表示异步方式运行，就是说程序发出命令后不等其运行完毕就继续执行下一条语句。程序会通过相应的事件处理过程来接收和处理该语句的运行结果。这种方式程序运行比较流畅，但编程会比较复杂一些。 -->
+		
+	</servlet>
+	<!-- 一般项目业务只需要写  一个    但是这是个上线网站  需要写伪静态-->
+	<servlet-mapping>   <!-- 后台用的 --> 
+        <servlet-name>dispatcherServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <!-- 前台用的 伪静态 -->
+	<servlet-mapping>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<url-pattern>*.html</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

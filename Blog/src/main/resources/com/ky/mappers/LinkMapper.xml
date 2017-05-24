@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ky.mapper.LinkMapper">
+	<resultMap type="Link" id="LinkResult">
+		<result property="id" column="id"/>
+		<result property="linkName" column="linkName"/>
+		<result property="linkUri" column="linkUri"/>
+		<result property="orderNo" column="orderNo"/>
+	</resultMap>
+	
+	<select id="list" parameterType="Map" resultMap="LinkResult">
+		select * from link order by orderNo
+	</select>
+	
+</mapper>

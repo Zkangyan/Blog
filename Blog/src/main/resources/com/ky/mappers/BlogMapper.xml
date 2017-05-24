@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ky.mapper.BlogMapper">
+	<resultMap type="Blog" id="BlogResult">
+		<result property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="summary" column="summary"/>
+		<result property="releaseDate" column="releaseDate"/>
+		<result property="clickHit" column="clickHit"/>
+		<result property="replyHit" column="replyHit"/>
+		<result property="content" column="content"/>
+		<result property="keyWord" column="keyWord"/>
+		
+		<association property="blogType" column="typeId" select="com.ky.biz.BlogTypeBiz.findById">
+		
+		</association>
+		
+	</resultMap>
+	
+	<select id="countList"  resultMap="BlogResult">
+		select DATE_FORMAT(releaseDate,'%Y-%m') AS releaseDateStr,COUNT(*) AS blogCount from blog GROUP BY DATE_FORMAT(releaseDate,'%Y-%m') ORDER BY DATE_FORMAT(releaseDate,'%Y-%m') DESC
+	</select>
+	
+	<!-- mysql分页 -->
+	<select id="list"  parameterType="Map" resultMap="BlogResult">
+		select * from blog
+		order by releaseDate desc
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+	</select>
+	
+	<select id="getTotal" parameterType="Map" resultType="Long">
+		select count(*) from blog
+	</select>
+	
+	
+	
+	
+</mapper>
