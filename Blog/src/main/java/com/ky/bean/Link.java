@@ -18,7 +18,6 @@ public class Link implements Serializable{
 	private String linkName;
 	private String linkUri;
 	private Integer orderNo;
-	
 	public Integer getId() {
 		return id;
 	}

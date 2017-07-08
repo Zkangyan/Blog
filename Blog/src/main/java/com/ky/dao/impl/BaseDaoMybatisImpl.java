@@ -22,7 +22,8 @@ public class BaseDaoMybatisImpl<T> extends SqlSessionDaoSupport implements BaseD
 	private String getMapperId(T t,String sqlId){
 		return mapperLocation+ t.getClass().getSimpleName()+"Mapper."+sqlId;
 	}
-	
+
+
 	@Override
 	@Resource(name="sqlSessionFactory")   //di
 	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {

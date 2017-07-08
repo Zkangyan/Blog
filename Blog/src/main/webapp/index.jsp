@@ -1,5 +1,7 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page isELIgnored="false" %>
 <%
 	/*机顶网址  防止路径出错    只有jsp特有*/
 	String path=request.getContextPath();  //  /douban
@@ -17,7 +19,7 @@
 <link rel="stylesheet" href="static/css/blog.css">
 <script src="static/bootstrap3/js/jquery-1.11.2.min.js"></script>
 <script src="static/bootstrap3/js/bootstrap.min.js"></script>
-<title>博客主页</title>
+<title >博客主页</title>
 <style type="text/css">
 	body{
 		padding-top: 10px;
@@ -74,85 +76,7 @@
 		</div>
 	</div>
 
-	<!-- bodly块 -->
-	<div class="row">
-		<div class="col-md-9">
-	  	<div class="data_list">
-	  		<div class="data_list_title">
-			<img src="static/images/list_icon.png"/>
-			最新博客
-			</div>
-			
-			<!-- 发布的博客信息 -->
-			<div class="datas">
-	  			<ul>
-	  				<li style="margin-bottom: 30px">
-	  					<span class="date"><a href="${pageContext.request.contextPath}/blog/articles/52.html">2016年02月15日</a></span>
-					  	<span class="title"><a href="${pageContext.request.contextPath}/blog/articles/52.html">使用CXF开发WebService客户端</a></span>
-					  	<span class="summary">摘要: 前面一讲开发了webservice服务器端接口，今天的话，我们来开发webservice客户端，让大家来体验下过程；首先建一个Maven项目，项目名字，WS_Client；然后我们要用CXF给我们提供的工具wsdl2java 来根据请求的url生成客户端代码；wsdl2java工具在CXF开发包里；开发下载地...</span>
-					  	<span class="img">
-					  		
-						  		<a href="/blog/articles/52.html"><img src="${pageContext.request.contextPath}/static/userImages/a.jpg" alt="1455539511890048174.jpg"></a>
-						  		&nbsp;&nbsp;
-					  		
-						  		<a href="/blog/articles/52.html"><img alt="QQ鎴浘20160215203213.jpg" src="${pageContext.request.contextPath}/static/userImages/b.jpg" title="1455539700734093102.jpg" width="667" height="264" style="width: 667px; height: 264px;"></a>
-						  		&nbsp;&nbsp;
-					  		
-						  		<a href="/blog/articles/52.html"><img alt="QQ鎴浘20160215203317.jpg" src="${pageContext.request.contextPath}/static/userImages/c.jpg" title="1455539761187019902.jpg"></a>
-						  		&nbsp;&nbsp;
-					  		
-					  	</span>
-					  	<span class="info">发表于 2016-02-15 21:06 阅读(71) 评论(5) </span>
-	  					
-	  				</li>
-	  				 <hr style="height:5px;border:none;border-top:1px dashed gray;padding-bottom:  10px;" />
-	  				
-	  				<li style="margin-bottom: 30px">
-	  					<span class="date"><a href="${pageContext.request.contextPath}/blog/articles/52.html">2016年02月15日</a></span>
-					  	<span class="title"><a href="${pageContext.request.contextPath}/blog/articles/52.html">使用CXF开发WebService客户端</a></span>
-					  	<span class="summary">摘要: 前面一讲开发了webservice服务器端接口，今天的话，我们来开发webservice客户端，让大家来体验下过程；首先建一个Maven项目，项目名字，WS_Client；然后我们要用CXF给我们提供的工具wsdl2java 来根据请求的url生成客户端代码；wsdl2java工具在CXF开发包里；开发下载地...</span>
-					  	<span class="img">
-					  		
-						  		<a href="/blog/articles/52.html"><img src="${pageContext.request.contextPath}/static/userImages/a.jpg" alt="1455539511890048174.jpg"></a>
-						  		&nbsp;&nbsp;
-					  		
-						  		<a href="/blog/articles/52.html"><img alt="QQ鎴浘20160215203213.jpg" src="${pageContext.request.contextPath}/static/userImages/b.jpg" title="1455539700734093102.jpg" width="667" height="264" style="width: 667px; height: 264px;"></a>
-						  		&nbsp;&nbsp;
-					  		
-						  		<a href="/blog/articles/52.html"><img alt="QQ鎴浘20160215203317.jpg" src="${pageContext.request.contextPath}/static/userImages/c.jpg" title="1455539761187019902.jpg"></a>
-						  		&nbsp;&nbsp;
-					  		
-					  	</span>
-					  	<span class="info">发表于 2016-02-15 21:06 阅读(71) 评论(5) </span>
-	  					
-	  				</li>
-	  				 <hr style="height:5px;border:none;border-top:1px dashed gray;padding-bottom:  10px;" />
-	  				
-	  				
-	  				<li style="margin-bottom: 30px">
-	  					<span class="date"><a href="${pageContext.request.contextPath}/blog/articles/52.html">2016年02月15日</a></span>
-					  	<span class="title"><a href="${pageContext.request.contextPath}/blog/articles/52.html">使用CXF开发WebService客户端</a></span>
-					  	<span class="summary">摘要: 前面一讲开发了webservice服务器端接口，今天的话，我们来开发webservice客户端，让大家来体验下过程；首先建一个Maven项目，项目名字，WS_Client；然后我们要用CXF给我们提供的工具wsdl2java 来根据请求的url生成客户端代码；wsdl2java工具在CXF开发包里；开发下载地...</span>
-					  	<span class="img">
-					  		
-						  		<a href="/blog/articles/52.html"><img src="${pageContext.request.contextPath}/static/userImages/a.jpg" alt="1455539511890048174.jpg"></a>
-						  		&nbsp;&nbsp;
-					  		
-						  		<a href="/blog/articles/52.html"><img alt="QQ鎴浘20160215203213.jpg" src="${pageContext.request.contextPath}/static/userImages/b.jpg" title="1455539700734093102.jpg" width="667" height="264" style="width: 667px; height: 264px;"></a>
-						  		&nbsp;&nbsp;
-					  		
-						  		<a href="/blog/articles/52.html"><img alt="QQ鎴浘20160215203317.jpg" src="${pageContext.request.contextPath}/static/userImages/c.jpg" title="1455539761187019902.jpg"></a>
-						  		&nbsp;&nbsp;
-					  		
-					  	</span>
-					  	<span class="info">发表于 2016-02-15 21:06 阅读(71) 评论(5) </span>
-	  					
-	  				</li>
-	  				 <hr style="height:5px;border:none;border-top:1px dashed gray;padding-bottom:  10px;" />
-	  			</ul>
-	  		</div>
-	  	</div>
-	  </div>
+	
 	  
 	  <!-- 博主信息 -->
 	  <div class="col-md-3">
@@ -185,13 +109,13 @@
 			<!-- 日期 -->
 			<div class="data_list">
 				<div class="data_list_title">
-					<img src="${pageContext.request.contextPath}/static/images/byDate_icon.png"/>
+					<img src="static/images/byDate_icon.png"/>
 					按日志日期
 				</div>
 				<div class="datas">
 					<ul>
-							<c:forEach var="blogCount" items="${blogCountList}">
-								<li><span><a href="#">${blogCount.releaseDateStr}(${blogCount.blogCount})</a></span></li>
+							<c:forEach var="blog" items="${DateList}">
+								<li><span><a href="#">${blog.releaseDateStr }(${blog.blogCount})</a></span></li>
 							</c:forEach>
 					</ul>
 				</div>

@@ -14,30 +14,117 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="content" column="content"/>
 		<result property="keyWord" column="keyWord"/>
 		
-		<association property="blogType" column="typeId" select="com.ky.biz.BlogTypeBiz.findById">
-		
-		</association>
+		 <association property="blogType" javaType="com.ky.bean.BlogType">
+			<result property="id" column="id"/>
+			<result property="typeName" column="typeName"/>
+			<result property="orderNo" column="orderNo"/>
+		</association> 
 		
 	</resultMap>
+	<!-- 根据日期分类 -->
+	  <select id="countListDate" resultType="Blog">
+		select  DATE_FORMAT(releaseDate,'%Y-%m') AS releaseDateStr,COUNT(*) AS blogCount from blog  GROUP BY DATE_FORMAT(releaseDate,'%Y-%m') ORDER BY DATE_FORMAT(releaseDate,'%Y-%m') DESC
+	</select>  
 	
-	<select id="countList"  resultMap="BlogResult">
-		select DATE_FORMAT(releaseDate,'%Y-%m') AS releaseDateStr,COUNT(*) AS blogCount from blog GROUP BY DATE_FORMAT(releaseDate,'%Y-%m') ORDER BY DATE_FORMAT(releaseDate,'%Y-%m') DESC
-	</select>
+	 <!--<select id="countListDate"  resultMap="BlogResult">
+		select blogtype.id, DATE_FORMAT(releaseDate,'%Y-%m') AS releaseDateStr,COUNT(*) AS blogCount from blog left join blogtype on blogtype.id=blog.typeId GROUP BY DATE_FORMAT(releaseDate,'%Y-%m') ORDER BY DATE_FORMAT(releaseDate,'%Y-%m') DESC
+	</select> -->
+	
+	
 	
 	<!-- mysql分页 -->
 	<select id="list"  parameterType="Map" resultMap="BlogResult">
-		select * from blog
+		select * from blog inner join blogType on blog.typeId=blogType.id
+		<where>
+			<if test="title!=null and title!='' ">
+				and title like #{title}
+			</if>
+			<if test="typeId!=null and typeId!='' ">
+				and typeId=#{typeId}
+			</if>
+			<if test="releaseDateStr!=null and releaseDateStr!='' ">
+				and DATE_FORMAT(releaseDate,'%Y-%m')=#{releaseDateStr}
+			</if>
+		</where>
 		order by releaseDate desc
 		<if test="start!=null and size!=null">
 			limit #{start},#{size}
 		</if>
 	</select>
-	
-	<select id="getTotal" parameterType="Map" resultType="Long">
+	<!-- 总记录数 -->
+	 <select id="getTotal" parameterType="Map" resultType="java.lang.Double">
 		select count(*) from blog
+		<where>
+			 <if test="title!=null and title!='' ">
+				and title like #{title}
+			</if>
+			<if test="typeId!=null and typeId!='' ">
+				and typeId=#{typeId}
+			</if>
+			<if test="releaseDateStr!=null and releaseDateStr!='' ">
+				and DATE_FORMAT(releaseDate,'%Y-%m')=#{releaseDateStr}
+			</if>
+		</where>
+	</select> 
+	
+	<!--根据ID查询博客  -->
+	<select id="findById" parameterType="Integer"   resultType="Blog">
+		select * from blog where id=#{id}
+	</select>
+	
+	<!-- 修改博客 -->
+	<update id="update" parameterType="Blog">
+		update blog
+		<set>
+			<if test="title!=null and title!=''">
+				title=#{title},
+			</if>
+			<if test="summary!=null and summary!=''">
+				summary=#{summary},
+			</if>
+			<if test="content!=null and content!=''">
+				content=#{content},
+			</if>
+			<if test="typeId!=null">
+				typeId=#{typeId},
+			</if>
+			<if test="clickHit!=null">
+				clickHit=#{clickHit},
+			</if>
+			<if test="replyHit!=null">
+				replyHit=#{replyHit},
+			</if>
+			<if test="keyWord!=null and keyWord!=''">
+				keyWord=#{keyWord}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<select id="getLastBlog" parameterType="Integer" resultType="Blog">
+		select * from blog where id&lt;#{id} order by id desc limit 1
+	</select>
+	
+	<select id="getNextBlog" parameterType="Integer"  resultType="Blog">
+		select * from blog where id&gt;#{id} order by id asc limit 1
 	</select>
 	
 	
+	<!-- <select id="getTotal" resultType="java.lang.Double">
+		select count(*) from blog
+	</select> -->
 	
+	<!-- 后台 -->
+	<insert id="add" useGeneratedKeys="true" keyProperty="id"  parameterType="Blog">
+		insert into blog values(null,#{title},#{summary},now(),0,0,#{content},#{blogType.id},#{keyWord})
+	</insert>
+	
+	<delete id="delete" parameterType="Integer">
+		delete from blog where id=#{id}
+	</delete>
+	
+	<select id="getBlogByTypeId" parameterType="Integer" resultType="java.lang.Double">
+		select count(*) from blog where typeId=#{typeId}
+	</select>
 	
 </mapper>

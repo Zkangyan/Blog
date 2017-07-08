@@ -1,5 +1,7 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page isELIgnored="false" %>
 <%
 	/*机顶网址  防止路径出错    只有jsp特有*/
 	String path=request.getContextPath();  //  /douban
@@ -17,7 +19,10 @@
 <link rel="stylesheet" href="static/css/blog.css">
 <script src="static/bootstrap3/js/jquery-1.11.2.min.js"></script>
 <script src="static/bootstrap3/js/bootstrap.min.js"></script>
-<title>${pageTitle }-Powered by 黑幽灵</title>
+<!--title图标  -->
+<link href="favicon.ico" rel="SHORTCUT ICON">
+<title >${pageTitle }-Powered by 黑幽灵</title>
+
 <style type="text/css">
 	body{
 		padding-top: 10px;
@@ -60,7 +65,7 @@
 				<div class="datas">
 					<ul>
 							<c:forEach var="blogTypeCount" items="${blogTypeCountList}">
-								<li><span><a href="#">${blogTypeCount.typeName}(${blogTypeCount.blogCount})</a></span></li>
+								<li><span><a href="index.html?typeId=${blogTypeCount.id}">${blogTypeCount.typeName}(${blogTypeCount.blogCount})</a></span></li>
 							</c:forEach>
 					</ul>
 				</div>
@@ -69,13 +74,13 @@
 			<!-- 日期 -->
 			<div class="data_list">
 				<div class="data_list_title">
-					<img src="${pageContext.request.contextPath}/static/images/byDate_icon.png"/>
+					<img src="static/images/byDate_icon.png"/>
 					按日志日期
 				</div>
 				<div class="datas">
 					<ul>
-							<c:forEach var="blogCount" items="${blogCountList}">
-								<li><span><a href="#">${blogCount.releaseDateStr}(${blogCount.blogCount})</a></span></li>
+							<c:forEach var="blog" items="${DateList}">
+								<li><span><a href="index.html?releaseDateStr=${blog.releaseDateStr}">${blog.releaseDateStr }(${blog.blogCount})</a></span></li>
 							</c:forEach>
 					</ul>
 				</div>
@@ -84,7 +89,7 @@
 			<!-- 友情链接 -->
 			<div class="data_list">
 				<div class="data_list_title">
-					<img src="${pageContext.request.contextPath}/static/images/link_icon.png"/>
+					<img src="static/images/link_icon.png"/>
 					友情链接
 				</div>
 				<div class="datas">

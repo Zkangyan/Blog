@@ -70,8 +70,9 @@ public class InitComponent4 implements ServletContextListener,ApplicationContext
 		application.setAttribute("blogTypeCountList", blogTypeCountList);
 		
 		BlogBiz blogBiz=(BlogBiz)applicationContext.getBean("blogBizImpl");
-		List<Blog> blogCountList=blogBiz.countList();//根据日期分组查询博客
-		application.setAttribute("blogCountList", blogCountList);
+		List<Blog> DateList=blogBiz.groupList()	;//根据日期分组查询博客
+		application.setAttribute("DateList", DateList);
+		
 	}
 
 	

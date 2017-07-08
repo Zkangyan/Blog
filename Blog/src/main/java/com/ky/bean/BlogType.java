@@ -14,6 +14,7 @@ public class BlogType implements Serializable{
 	private String typeName; // 博客类型名称
 	private Integer orderNo; // 排序序号 从小到大排序
 	private Integer blogCount; // 类别后面的数量数量   另加的属性
+	
 	public Integer getId() {
 		return id;
 	}

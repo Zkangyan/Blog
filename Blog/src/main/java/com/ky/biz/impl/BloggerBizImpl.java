@@ -49,4 +49,9 @@ public class BloggerBizImpl implements BloggerBiz {
 		}
 	}
 
+	@Override
+	public Integer update(Blogger blogger) {
+		return this.baseDao.update(blogger, "updateBlogger");
+	}
+
 }

@@ -13,6 +13,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="list" parameterType="Map" resultMap="LinkResult">
 		select * from link order by orderNo
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
 	</select>
+	
+	<select id="getTotalLink" parameterType="Map" resultType="java.lang.Double">
+		select count(*) from link
+	</select>
+	
+	<insert id="addLink" parameterType="Link">
+		insert into link(id,linkName,linkUri,orderNo) values(null,#{linkName},#{linkUrl},#{orderNo});
+	</insert>
+	
+	<update id="updateLink" parameterType="Link">
+		update link
+		<set>
+			<if test="linkName!=null and linkName!=''">
+				linkName=#{linkName},
+			</if>
+			<if test="linkUrl!=null and linkUrl!=''">
+				linkUrl=#{linkUrl},
+			</if>
+			<if test="orderNo!=null">
+				orderNo=#{orderNo},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteLink" parameterType="Integer">
+		delete from link where id=#{id}
+	</delete>
 	
 </mapper>

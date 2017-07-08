@@ -34,6 +34,31 @@ public class LinkBizImpl implements LinkBiz {
 		return this.baseDao.findAll(link, map, "list");
 	}
 
+	@Override
+	public Long getTotal(Map<String, Object> map) {
+		Link link=new Link();
+		double size=this.baseDao.findFunc(link, "getTotalLink");
+		return (long) size;
+	}
+
+	@Override
+	public Integer add(Link link) {
+		return this.baseDao.add(link, "addLink");
+	}
+
+	@Override
+	public Integer update(Link link) {
+		return this.baseDao.update(link, "updateLink");
+	}
+
+	@Override
+	public void delete(Integer id) {
+		Link link=new Link();
+		link.setId(id);
+		this.baseDao.delete(link, "deleteLink");
+		
+	}
+
 	
 		
 		

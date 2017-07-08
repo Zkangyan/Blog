@@ -14,5 +14,9 @@ public interface BloggerBiz {
 	//查询博主信息
 	public Blogger find();
 	
+	/**
+	 * 跟新博主信息
+	 */
+	public Integer update(Blogger blogger);
 	
 }

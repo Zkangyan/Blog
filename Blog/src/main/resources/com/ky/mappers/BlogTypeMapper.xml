@@ -18,4 +18,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from blogtype where id=#{id}
 	</select>
 	
+	<!-- mysql分页 -->
+	<select id="list"  parameterType="Map" resultMap="BlogTypeResult">
+		select * from blogtype
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+	</select>
+	<!-- 总记录数 -->
+	 <select id="getTotal" parameterType="Map" resultType="java.lang.Double">
+		select count(*) from blogtype
+	</select> 
+	
+	<insert id="add" parameterType="BlogType">
+		insert into blogtype(id,typeName,orderNo) values(null,#{typeName},#{orderNo})
+	</insert>
+	
+	<update id="update" parameterType="BlogType">
+		update  blogtype
+		<set>
+			<if test="typeName!=null and typeName!=''">
+				typeName=#{typeName}
+			</if>
+			<if test="orderNo!=null">
+				orderNo=#{orderNo}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		delete from blogtype where id=#{id}
+	</delete>
+	
 </mapper>
